@@ -1,0 +1,14 @@
+{
+  "name": "Pour It",
+  "short_name": "Pour It",
+  "description": "A physics-based liquid-pouring precision game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#100c0a",
+  "theme_color": "#1b1512",
+  "icons": [
+    { "src": "./favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

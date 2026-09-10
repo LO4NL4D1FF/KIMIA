@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#1d1613"/>
+  <!-- glass body -->
+  <path d="M20 16h24l-3 32a4 4 0 0 1-4 3.6h-10A4 4 0 0 1 23 48z"
+        fill="#cfe9f2" fill-opacity=".16" stroke="#dff1f8" stroke-opacity=".55" stroke-width="2"/>
+  <!-- liquid, filled to the line -->
+  <path d="M22.6 31h18.8l-1.4 17a4 4 0 0 1-4 3.6h-8A4 4 0 0 1 24 48z" fill="#4fb3dd"/>
+  <ellipse cx="32" cy="31" rx="9.4" ry="2.4" fill="#8fd6f0"/>
+  <!-- rim -->
+  <ellipse cx="32" cy="16" rx="12" ry="3.4" fill="none" stroke="#ffc46b" stroke-width="2.4"/>
+  <!-- pouring stream -->
+  <path d="M32 3c0 4-2 6-2 8s2 2.4 2 5" fill="none" stroke="#8fd6f0"
+        stroke-width="2.6" stroke-linecap="round"/>
+</svg>
