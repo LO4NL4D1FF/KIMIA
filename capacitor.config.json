@@ -1,0 +1,17 @@
+{
+  "appId": "com.pourit.game",
+  "appName": "Pour It",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#100C0A"
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "backgroundColor": "#100C0A",
+      "launchAutoHide": true
+    }
+  }
+}

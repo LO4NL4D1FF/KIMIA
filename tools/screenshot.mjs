@@ -53,13 +53,17 @@ await page.mouse.move(box.x, box.y);
 await page.mouse.down();
 await page.waitForTimeout(900);
 await page.screenshot({ path: `${OUT}/05-pouring.png` });
-await page.waitForTimeout(1400);
+// Drag up to open the pour, and hold long enough to actually fill the glass.
+await page.mouse.move(box.x, box.y - 120, { steps: 8 });
+await page.waitForTimeout(1600);
 await page.screenshot({ path: `${OUT}/06-pouring-more.png` });
+await page.waitForTimeout(Number(process.env.HOLD_MS ?? 2600));
+await page.screenshot({ path: `${OUT}/07-nearly-full.png` });
 await page.mouse.up();
-await page.waitForTimeout(2600);
-await page.screenshot({ path: `${OUT}/07-settled.png` });
-await page.waitForTimeout(2600);
-await page.screenshot({ path: `${OUT}/08-result.png` });
+await page.waitForTimeout(3000);
+await page.screenshot({ path: `${OUT}/08-settled.png` });
+await page.waitForTimeout(3200);
+await page.screenshot({ path: `${OUT}/09-result.png` });
 
 // Report what the canvas actually contains, so a blank render is caught.
 const stats = await page.evaluate(() => {
