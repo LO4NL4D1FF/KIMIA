@@ -17,7 +17,7 @@ export const LEVELS_PER_WORLD = 25;
  */
 export const MAX_TILT = 0.42;
 export const MAX_ROCK = 0.38;
-export const MAX_TRAVEL = 0.1;
+export const MAX_TRAVEL = 0.07;
 /** Clear opening a stream needs to reach the glass past an obstacle. */
 export const MIN_STREAM_GAP = 0.07;
 /**
@@ -122,10 +122,10 @@ export function jugHeightFor(glasses: readonly GlassSpec[]): number {
 function glassBase(rng: Rng, t: number): GlassSpec {
   // Glasses get narrower and taller as a world progresses: less margin for
   // error and a higher surface to read, without any new mechanic.
-  const width = lerp(0.26, 0.17, t) + rng.jitter(0.012);
-  const height = lerp(0.24, 0.34, t) + rng.jitter(0.015);
+  const width = lerp(0.3, 0.19, t) + rng.jitter(0.012);
+  const height = lerp(0.26, 0.36, t) + rng.jitter(0.015);
   return {
-    x: rng.jitter(0.06),
+    x: rng.jitter(0.03),
     y: TABLE_Y,
     width,
     height,
@@ -209,7 +209,10 @@ function makeObstacles(rng: Rng, t: number, glasses: GlassSpec[], intensity = 1)
 
 function addSecondGlass(glasses: GlassSpec[], rng: Rng, t: number): void {
   const first = glasses[0];
-  const separation = lerp(0.19, 0.3, t);
+  // Two glasses have to share the width, so they shrink to fit the frame.
+  first.width = Math.min(first.width, 0.22);
+  first.height = Math.min(first.height, 0.32);
+  const separation = lerp(0.24, 0.3, t);
   first.x = -separation * 0.5;
   const second: GlassSpec = {
     ...first,

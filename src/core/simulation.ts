@@ -8,8 +8,22 @@ import { Rng, hashSeed } from './rng';
 import { clamp, segmentSegmentDistance } from './geometry';
 import type { LevelSpec } from '../levels/types';
 
-/** The playfield, in metres. Portrait, sized for a phone screen. */
-export const PLAYFIELD: Domain = { minX: -0.5, minY: -0.12, maxX: 0.5, maxY: 1.7 };
+/**
+ * The playfield, in metres. Portrait, sized for a phone screen.
+ *
+ * Narrow on purpose: the camera fits this width exactly, so the narrower it is
+ * the larger the glass reads on screen. Everything a level places has to fit
+ * inside it, travel included.
+ */
+export const PLAYFIELD: Domain = { minX: -0.36, minY: -0.12, maxX: 0.36, maxY: 1.2 };
+
+/**
+ * The part of the playfield the camera keeps in frame. The action lives between
+ * the table and the top of the jug; a phone screen is taller than that, and the
+ * spare room goes to the background rather than to empty space at the top.
+ */
+export const FRAME_BOTTOM = -0.1;
+export const FRAME_TOP = 0.98;
 export const TABLE_Y = 0.06;
 export const FIXED_STEP = 1 / 120;
 /** Never simulate more than this much wall-clock in one frame. */

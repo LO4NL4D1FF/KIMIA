@@ -21,6 +21,7 @@ import {
   ENDLESS_LIVES,
 } from '../src/levels/endless';
 import { MECHANIC_ORDER, type Mechanic } from '../src/levels/types';
+import { FRAME_TOP, PLAYFIELD } from '../src/core/simulation';
 
 describe('campaign structure', () => {
   it('has five worlds of twenty-five levels', () => {
@@ -107,16 +108,25 @@ describe('campaign structure', () => {
     }
   });
 
-  it('keeps every glass and obstacle inside the playfield', () => {
+  it('keeps every glass and obstacle inside the playfield, travel included', () => {
     for (const level of buildCampaign().flat()) {
       for (const glass of level.glasses) {
-        expect(Math.abs(glass.x) + glass.width / 2).toBeLessThan(0.5);
-        expect(glass.y + glass.height).toBeLessThan(1.1);
+        const travel = Math.abs(glass.orbit?.radiusX ?? 0);
+        expect(
+          Math.abs(glass.x) + travel + glass.width / 2,
+          `${level.id} glass leaves the frame`,
+        ).toBeLessThanOrEqual(PLAYFIELD.maxX);
+        expect(glass.y + glass.height).toBeLessThan(FRAME_TOP);
       }
       for (const obstacle of level.obstacles) {
-        expect(Math.abs(obstacle.x)).toBeLessThan(0.5);
-        expect(obstacle.y).toBeLessThan(1.2);
+        const travel = Math.abs(obstacle.orbit?.radiusX ?? 0);
+        expect(Math.abs(obstacle.x) + travel + obstacle.length / 2).toBeLessThanOrEqual(
+          PLAYFIELD.maxX,
+        );
       }
+      // The jug has to be reachable and in shot too.
+      expect(Math.abs(level.jug.x)).toBeLessThan(PLAYFIELD.maxX);
+      expect(level.jug.y).toBeLessThan(FRAME_TOP);
     }
   });
 
@@ -179,7 +189,10 @@ describe('endless mode', () => {
     for (const stage of [1, 20, 100, 400]) {
       const level = buildEndlessStage(stage, 42);
       for (const glass of level.glasses) {
-        expect(Math.abs(glass.x) + glass.width / 2).toBeLessThan(0.5);
+        const travel = Math.abs(glass.orbit?.radiusX ?? 0);
+        expect(Math.abs(glass.x) + travel + glass.width / 2).toBeLessThanOrEqual(
+          PLAYFIELD.maxX,
+        );
         expect(glass.targetFraction).toBeGreaterThan(0.3);
       }
       expect(level.timeLimit).toBeGreaterThanOrEqual(13);

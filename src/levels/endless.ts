@@ -56,10 +56,10 @@ export function buildEndlessStage(stage: number, runSeed: number): LevelSpec {
   const t = escalation(n);
 
   const glass: GlassSpec = {
-    x: rng.jitter(0.07),
+    x: rng.jitter(0.03),
     y: TABLE_Y,
-    width: lerp(0.25, 0.15, t) + rng.jitter(0.01),
-    height: lerp(0.24, 0.36, t),
+    width: lerp(0.29, 0.17, t) + rng.jitter(0.01),
+    height: lerp(0.26, 0.38, t),
     angle: 0,
     targetFraction: clamp(lerp(0.75, 0.55, t) + rng.jitter(0.08), 0.4, 0.88),
   };
@@ -98,7 +98,9 @@ export function buildEndlessStage(stage: number, runSeed: number): LevelSpec {
     mechanics.push('spin');
   }
   if (chosen.has('multi')) {
-    const separation = lerp(0.2, 0.32, t);
+    glass.width = Math.min(glass.width, 0.22);
+    glass.height = Math.min(glass.height, 0.32);
+    const separation = lerp(0.24, 0.3, t);
     glass.x = -separation * 0.5;
     glasses.push({
       ...glass,
